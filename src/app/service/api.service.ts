@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Cliente } from '../cliente.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,9 @@ export class ApiService {
     
   }
 
-  saveData(data: any) {
+  saveData(data: any): Observable<Cliente> {
     const headers = { 'Authorization': 'Bearer my-token', 'My-Custom-Header': 'foobar' };
 
-    return this.http.post(this.apiUrl, data, {headers})
+    return this.http.post<Cliente>(this.apiUrl, data, {headers})
   }
 }
