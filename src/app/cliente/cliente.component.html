@@ -1,1 +1,11 @@
-<p>cliente works!</p>
+<div class="">
+    <form class="student-form">
+        <div class="student-form__field">
+            <label class="student-form__label" for="name">Nombre</label>
+            <input class="student-form__input" [(ngModel)]="cliente.name" type="text" id="name" name="name">
+        </div>
+        
+        <button class="student-form__submit" (click)="onSubmit()" type="button">Submit</button>
+    </form>
+    {{this.result}}
+</div>
