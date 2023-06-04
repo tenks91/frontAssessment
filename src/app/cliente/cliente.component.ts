@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-cliente',
@@ -7,20 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent {
+  disabled = false;
 
   cliente = {
     name: '',
-    code: '12312312312'
+    code: this.disabled
   }
 
   result = '';
 
-  constructor(private router: Router){
-    
-  }
+  constructor(private activatedRoute: ActivatedRoute){ }
 
   ngOnInit(): void {
-
+    this.activatedRoute.params.subscribe((params: Params) => {
+      if(!params['code']){
+        this.disabled = true;
+        console.log("entro");
+        console.log(params['code']);
+      }
+    })
   }
 
   onSubmit() {
