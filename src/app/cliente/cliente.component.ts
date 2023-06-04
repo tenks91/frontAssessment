@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ApiService } from '../service/api.service';
 
 @Component({
   selector: 'app-cliente',
@@ -7,29 +8,30 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent {
-  disabled = false;
+  disabled = true;
 
   cliente = {
     name: '',
-    code: this.disabled
+    code: ''
   }
 
   result = '';
 
-  constructor(private activatedRoute: ActivatedRoute){ }
+  constructor(private activatedRoute: ActivatedRoute, private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
-      if(!params['code']){
-        this.disabled = true;
-        console.log("entro");
-        console.log(params['code']);
+      if (params['code']) {
+        this.disabled = false;
+        this.cliente.code = params['code'];
       }
     })
   }
 
   onSubmit() {
-    this.result = JSON.stringify(this.cliente)
+    this.apiService
+      .saveData(this.cliente)
+      .subscribe(data => console.log(data));
   }
 
 }
